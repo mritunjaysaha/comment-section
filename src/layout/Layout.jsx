@@ -3,8 +3,9 @@ import COMMENT_DATA from '../../data.json';
 
 import styles from './layout.module.scss';
 import { CommentReply } from '../components/Comment/CommentReply';
+import { CommentTextArea } from '../components/CommentTextArea/CommentTextArea';
 
-const { comments } = COMMENT_DATA;
+const { comments, currentUser } = COMMENT_DATA;
 
 function Layout() {
     return (
@@ -16,6 +17,7 @@ function Layout() {
                     {data?.replies.length ? <CommentReply dataArray={data.replies} /> : ''}
                 </>
             ))}
+            <CommentTextArea userImg={currentUser.image.png} />
         </section>
     );
 }

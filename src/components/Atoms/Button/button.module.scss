@@ -1,0 +1,14 @@
+@import '../../../styles/abstract/variables';
+
+.button {
+    width: 10.4rem;
+    height: 4.8rem;
+
+    background-color: $moderate-blue;
+    border-radius: $border-radius-alpha;
+
+    text-transform: uppercase;
+
+    color: $white;
+    font-weight: 500;
+}
