@@ -1,0 +1,9 @@
+@import '../../styles/abstract/variables';
+
+.cta_button {
+    display: flex;
+    gap: 0.8rem;
+
+    color: $moderate-blue;
+    font-weight: 500;
+}
