@@ -4,10 +4,17 @@ import COMMENT_DATA from '../../data.json';
 import styles from './layout.module.scss';
 import { CommentReply } from '../components/Comment/CommentReply';
 import { CommentTextArea } from '../components/CommentTextArea/CommentTextArea';
+import { useDispatch } from 'react-redux';
+import { setComments, setCurrentUser } from '../redux/slice/commentSlice';
 
 const { comments, currentUser } = COMMENT_DATA;
 
 function Layout() {
+    const dispatch = useDispatch();
+
+    dispatch(setCurrentUser(currentUser));
+    dispatch(setComments(comments));
+
     return (
         <section className={styles.layout_section}>
             {comments.map((data) => (

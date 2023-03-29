@@ -4,6 +4,7 @@ import { CommentScoreCounter } from './CommentScoreCounter';
 
 import styles from './comment.module.scss';
 import { useState } from 'react';
+import { CommentTextArea } from '../CommentTextArea/CommentTextArea';
 
 export function Comment({ data }) {
     const { content, score, user, createdAt } = data;
@@ -12,6 +13,8 @@ export function Comment({ data }) {
 
     const [canIncrease, setCanIncrease] = useState(true);
     const [canDecrease, setCanDecrease] = useState(true);
+
+    const [isReplyClicked, setIsReplyClicked] = useState(false);
 
     function handleIncreaseScore() {
         if (canIncrease) {
@@ -29,21 +32,28 @@ export function Comment({ data }) {
         }
     }
 
+    function handleReplyClick(e) {
+        e.stopPropagation();
+    }
+
     return (
-        <div className={styles.comment_container}>
-            <CommentScoreCounter
-                score={scoreCount}
-                handleIncreaseScore={handleIncreaseScore}
-                handleDecreaseScore={handleDecreaseScore}
-            />
-            <div className={styles.comment_data}>
-                <CommentHeader
-                    imgSrc={user.image.png}
-                    username={user.username}
-                    createdAt={createdAt}
+        <>
+            <div className={styles.comment_container}>
+                <CommentScoreCounter
+                    score={scoreCount}
+                    handleIncreaseScore={handleIncreaseScore}
+                    handleDecreaseScore={handleDecreaseScore}
                 />
-                <CommentBody content={content} />
+                <div className={styles.comment_data}>
+                    <CommentHeader
+                        imgSrc={user.image.png}
+                        username={user.username}
+                        createdAt={createdAt}
+                    />
+                    <CommentBody content={content} />
+                </div>
             </div>
-        </div>
+            {/* <CommentTextArea /> */}
+        </>
     );
 }
