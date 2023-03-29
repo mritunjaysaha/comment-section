@@ -1,0 +1,15 @@
+@import '../../../styles/abstract/variables';
+
+.button_icon {
+    display: flex;
+    gap: 0.8rem;
+
+    color: $moderate-blue;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.5;
+    }
+}
