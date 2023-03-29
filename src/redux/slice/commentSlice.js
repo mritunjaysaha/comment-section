@@ -27,6 +27,13 @@ export const commentSlice = createSlice({
             state.commentsArr = idArr
         }
         ,
+        addNewComment: (state, { payload }) => {
+            console.log(payload)
+
+            state.commentsArr.push(payload.id)
+            state.commentsObj[payload.id] = payload
+        }
+        ,
         addReply: (state, { payload }) => {
             const { id, data } = payload
 
@@ -38,4 +45,4 @@ export const commentSlice = createSlice({
     }
 })
 
-export const { setCurrentUser, setComments, addReply } = commentSlice.actions
+export const { setCurrentUser, setComments, addNewComment, addReply } = commentSlice.actions

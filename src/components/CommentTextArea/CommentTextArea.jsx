@@ -3,7 +3,7 @@ import { Button } from '../Atoms/Button/Button';
 
 import styles from './commentTextArea.module.scss';
 
-export function CommentTextArea({ handleButtonClick, buttonText = 'send', handleChange }) {
+export function CommentTextArea({ value, handleButtonClick, buttonText = 'send', handleChange }) {
     const { currentUser } = useSelector((state) => state.comment);
 
     const userImg = currentUser?.image?.png;
@@ -16,6 +16,7 @@ export function CommentTextArea({ handleButtonClick, buttonText = 'send', handle
                 placeholder='Add a comment...'
                 rows={4}
                 onChange={handleChange}
+                value={value}
             />
             <Button onClick={handleButtonClick}>{buttonText}</Button>
         </div>

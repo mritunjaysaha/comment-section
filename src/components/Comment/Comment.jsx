@@ -88,6 +88,7 @@ export function Comment({ data }) {
                     handleButtonClick={handleCommentReply}
                     handleChange={handleTextAreaChange}
                     buttonText='reply'
+                    value={commentValue}
                 />
             ) : (
                 ''

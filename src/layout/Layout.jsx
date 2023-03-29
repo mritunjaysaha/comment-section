@@ -4,8 +4,8 @@ import styles from './layout.module.scss';
 import { CommentReply } from '../components/Comment/CommentReply';
 import { CommentTextArea } from '../components/CommentTextArea/CommentTextArea';
 import { useDispatch, useSelector } from 'react-redux';
-import { setComments, setCurrentUser } from '../redux/slice/commentSlice';
-import { useEffect, useState } from 'react';
+import { addNewComment, setComments, setCurrentUser } from '../redux/slice/commentSlice';
+import { useEffect } from 'react';
 import { useComment } from '../hooks/useComment';
 
 export function Layout() {
@@ -22,9 +22,29 @@ export function Layout() {
         }
     }, []);
 
-    const { commentsArr, commentsObj } = useSelector((state) => state.comment);
+    const { commentsArr, commentsObj, currentUser } = useSelector((state) => state.comment);
 
-    const { commentValue, handleTextAreaChange } = useComment();
+    const { commentValue, setCommentValue, handleTextAreaChange } = useComment();
+
+    function handleSend(e) {
+        e.preventDefault();
+
+        const data = {
+            id: Date.now(),
+            content: commentValue,
+            createdAt: 'today',
+            score: 0,
+            user: {
+                image: currentUser.image,
+                username: currentUser.username,
+            },
+            replies: [],
+        };
+
+        dispatch(addNewComment(data));
+
+        setCommentValue('');
+    }
 
     return (
         <section className={styles.layout_section}>
@@ -39,7 +59,11 @@ export function Layout() {
                     )}
                 </>
             ))}
-            <CommentTextArea />
+            <CommentTextArea
+                handleChange={handleTextAreaChange}
+                handleButtonClick={handleSend}
+                value={commentValue}
+            />
         </section>
     );
 }
