@@ -52,6 +52,7 @@ export function Comment({ data }) {
             content: commentValue,
             createdAt: 'today',
             score: 0,
+            replyingtO: user.username,
             user: {
                 image: currentUser.image,
                 username: currentUser.username,
