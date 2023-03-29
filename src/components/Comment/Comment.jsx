@@ -5,16 +5,21 @@ import { CommentScoreCounter } from './CommentScoreCounter';
 import styles from './comment.module.scss';
 import { useState } from 'react';
 import { CommentTextArea } from '../CommentTextArea/CommentTextArea';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReply } from '../../redux/slice/commentSlice';
 
 export function Comment({ data }) {
-    const { content, score, user, createdAt } = data;
+    const dispatch = useDispatch();
+
+    const { content, score, user, createdAt, id } = data;
+
+    const { currentUser } = useSelector((state) => state.comment);
 
     const [scoreCount, setScoreCount] = useState(score);
-
     const [canIncrease, setCanIncrease] = useState(true);
     const [canDecrease, setCanDecrease] = useState(true);
-
     const [isReplyClicked, setIsReplyClicked] = useState(false);
+    const [commentValue, setCommentValue] = useState('');
 
     function handleIncreaseScore() {
         if (canIncrease) {
@@ -32,8 +37,34 @@ export function Comment({ data }) {
         }
     }
 
-    function handleReplyClick(e) {
-        e.stopPropagation();
+    function handleReplyClick() {
+        setIsReplyClicked(!isReplyClicked);
+
+        console.log('clicked');
+    }
+
+    function handleTextAreaChange(e) {
+        setCommentValue(e.target.value);
+    }
+
+    function handleCommentReply(e) {
+        e.preventDefault();
+
+        const data = {
+            id: Date.now(),
+            content: commentValue,
+            createdAt: 'today',
+            score: 0,
+            user: {
+                image: currentUser.image,
+                username: currentUser.username,
+            },
+        };
+
+        dispatch(addReply({ id, data }));
+
+        setCommentValue('');
+        setIsReplyClicked(false);
     }
 
     return (
@@ -49,11 +80,19 @@ export function Comment({ data }) {
                         imgSrc={user.image.png}
                         username={user.username}
                         createdAt={createdAt}
+                        handleReplyClick={handleReplyClick}
                     />
                     <CommentBody content={content} />
                 </div>
             </div>
-            {/* <CommentTextArea /> */}
+            {isReplyClicked ? (
+                <CommentTextArea
+                    handleButtonClick={handleCommentReply}
+                    handleChange={handleTextAreaChange}
+                />
+            ) : (
+                ''
+            )}
         </>
     );
 }
