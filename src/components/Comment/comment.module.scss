@@ -98,3 +98,36 @@ $padding: 2.4rem;
         font-weight: 500;
     }
 }
+
+/**
+* COMMENT REPLY
+*/
+
+.comment_reply_section {
+    display: flex;
+    justify-content: space-between;
+
+    width: 70rem;
+
+    margin: 2rem 0;
+
+    .vertical_line {
+        display: flex;
+        justify-content: center;
+
+        width: 8rem;
+        height: inherit;
+
+        div {
+            display: flex;
+            width: 0.2rem;
+            height: 100%;
+
+            background-color: $light-gray;
+        }
+    }
+
+    .comment_container {
+        width: 62rem;
+    }
+}
