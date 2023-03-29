@@ -89,6 +89,7 @@ export function Comment({ data }) {
                 <CommentTextArea
                     handleButtonClick={handleCommentReply}
                     handleChange={handleTextAreaChange}
+                    buttonText='reply'
                 />
             ) : (
                 ''
