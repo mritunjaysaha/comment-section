@@ -1,0 +1,45 @@
+@import '../../styles/abstract/variables';
+
+$padding: 2.4rem;
+
+.comment_container {
+    display: flex;
+    padding: $padding;
+
+    background: $comments-bg;
+    border-radius: $border-radius-alpha;
+
+    width: 70rem;
+
+    .comment_data {
+        padding-left: $padding;
+    }
+}
+
+.comment_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+
+    .user_info {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+
+        .user_image {
+            width: 3.2rem;
+            height: 3.2rem;
+            object-fit: contain;
+        }
+
+        .username {
+            color: $dark-blue;
+            font-weight: 500;
+        }
+
+        .created_at {
+            color: $grayish-blue;
+            font-weight: 400;
+        }
+    }
+}
