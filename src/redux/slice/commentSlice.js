@@ -41,8 +41,25 @@ export const commentSlice = createSlice({
             console.log(id, data)
 
             state.commentsObj[id].replies.push(data)
+
+            updateLocalStorageComments(state)
+        },
+        updateLocalStorageComments: (state, { payload }) => {
+            console.log("here")
+            const commentsArr = []
+
+
+            for (let i = 0, len = state.commentsArr.length; i < len; i++) {
+                const id = state.commentsArr[i]
+                const data = state.commentsObj[id]
+                commentsArr.push(data)
+            }
+
+            console.log({ commentsArr })
+
+            localStorage.setItem("comments", JSON.stringify(commentsArr))
         }
     }
 })
 
-export const { setCurrentUser, setComments, addNewComment, addReply } = commentSlice.actions
+export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments } = commentSlice.actions

@@ -4,7 +4,12 @@ import styles from './layout.module.scss';
 import { CommentReply } from '../components/Comment/CommentReply';
 import { CommentTextArea } from '../components/CommentTextArea/CommentTextArea';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewComment, setComments, setCurrentUser } from '../redux/slice/commentSlice';
+import {
+    addNewComment,
+    setComments,
+    setCurrentUser,
+    updateLocalStorageComments,
+} from '../redux/slice/commentSlice';
 import { useEffect } from 'react';
 import { useComment } from '../hooks/useComment';
 
@@ -42,6 +47,8 @@ export function Layout() {
         };
 
         dispatch(addNewComment(data));
+
+        dispatch(updateLocalStorageComments());
 
         setCommentValue('');
     }

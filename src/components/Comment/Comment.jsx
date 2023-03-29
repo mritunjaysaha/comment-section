@@ -6,7 +6,7 @@ import styles from './comment.module.scss';
 import { useState } from 'react';
 import { CommentTextArea } from '../CommentTextArea/CommentTextArea';
 import { useDispatch, useSelector } from 'react-redux';
-import { addReply } from '../../redux/slice/commentSlice';
+import { addReply, updateLocalStorageComments } from '../../redux/slice/commentSlice';
 import { useComment } from '../../hooks/useComment';
 
 export function Comment({ data }) {
@@ -63,6 +63,8 @@ export function Comment({ data }) {
 
         setCommentValue('');
         setIsReplyClicked(false);
+
+        dispatch(updateLocalStorageComments());
     }
 
     return (
