@@ -41,6 +41,17 @@ $padding: 2.4rem;
             object-fit: contain;
         }
 
+        .current_user_reply {
+            border-radius: 0.2rem;
+            background-color: $moderate-blue;
+
+            padding: 0.3rem 0.6rem;
+
+            color: $white;
+            font-weight: 500;
+            font-size: 1.3rem;
+        }
+
         .username {
             color: $dark-blue;
             font-weight: 500;

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addReply, updateLocalStorageComments } from '../../redux/slice/commentSlice';
 import { useComment } from '../../hooks/useComment';
 
-export function Comment({ data }) {
+export function Comment({ data, isReply = false }) {
     const dispatch = useDispatch();
 
     const { content, score, user, createdAt, id } = data;
@@ -81,6 +81,7 @@ export function Comment({ data }) {
                         username={user.username}
                         createdAt={createdAt}
                         handleReplyClick={handleReplyClick}
+                        isReply={isReply}
                     />
                     <CommentBody content={content} />
                 </div>

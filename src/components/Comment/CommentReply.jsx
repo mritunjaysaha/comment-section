@@ -10,7 +10,7 @@ export function CommentReply({ dataArray }) {
             </div>
             <div className={styles.comment_reply_container}>
                 {dataArray.map((data) => (
-                    <Comment key={data.id} data={data} />
+                    <Comment key={data.id} data={data} isReply={true} />
                 ))}
             </div>{' '}
         </section>
