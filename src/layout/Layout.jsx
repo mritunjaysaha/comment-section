@@ -1,32 +1,42 @@
 import { Comment } from '../components/Comment/Comment';
-import COMMENT_DATA from '../../data.json';
 
 import styles from './layout.module.scss';
 import { CommentReply } from '../components/Comment/CommentReply';
 import { CommentTextArea } from '../components/CommentTextArea/CommentTextArea';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setComments, setCurrentUser } from '../redux/slice/commentSlice';
+import { useEffect } from 'react';
 
-const { comments, currentUser } = COMMENT_DATA;
-
-function Layout() {
+export function Layout() {
     const dispatch = useDispatch();
 
-    dispatch(setCurrentUser(currentUser));
-    dispatch(setComments(comments));
+    useEffect(() => {
+        const comments = localStorage.getItem('comments');
+        const currentUser = localStorage.getItem('currentUser');
+
+        console.log({ comments, currentUser });
+        if (comments && currentUser) {
+            dispatch(setCurrentUser(JSON.parse(currentUser)));
+            dispatch(setComments(JSON.parse(comments)));
+        }
+    }, []);
+
+    const { commentsArr, commentsObj } = useSelector((state) => state.comment);
 
     return (
         <section className={styles.layout_section}>
-            {comments.map((data) => (
+            {commentsArr.map((id) => (
                 <>
-                    <Comment key={data.id} data={data} />
+                    <Comment key={id} data={commentsObj[id]} />
 
-                    {data?.replies.length ? <CommentReply dataArray={data.replies} /> : ''}
+                    {commentsObj[id]?.replies.length ? (
+                        <CommentReply dataArray={commentsObj[id].replies} />
+                    ) : (
+                        ''
+                    )}
                 </>
             ))}
-            <CommentTextArea userImg={currentUser.image.png} />
+            <CommentTextArea />
         </section>
     );
 }
-
-export default Layout;

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     currentUser: {},
-    comments: []
+    commentsArr: [],
+    commentsObj: {}
 }
 
 export const commentSlice = createSlice({
@@ -14,7 +15,16 @@ export const commentSlice = createSlice({
         }
         ,
         setComments: (state, { payload }) => {
-            state.comments = payload
+            // state.comments = payload
+            const idArr = []
+
+            payload.forEach((data) => {
+                idArr.push(data.id)
+
+                state.commentsObj[data.id] = data
+            })
+
+            state.commentsArr = idArr
         }
     }
 })
