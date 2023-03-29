@@ -7,19 +7,20 @@ import { useState } from 'react';
 import { CommentTextArea } from '../CommentTextArea/CommentTextArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReply } from '../../redux/slice/commentSlice';
+import { useComment } from '../../hooks/useComment';
 
 export function Comment({ data }) {
     const dispatch = useDispatch();
 
     const { content, score, user, createdAt, id } = data;
-
     const { currentUser } = useSelector((state) => state.comment);
 
     const [scoreCount, setScoreCount] = useState(score);
     const [canIncrease, setCanIncrease] = useState(true);
     const [canDecrease, setCanDecrease] = useState(true);
     const [isReplyClicked, setIsReplyClicked] = useState(false);
-    const [commentValue, setCommentValue] = useState('');
+
+    const { commentValue, setCommentValue, handleTextAreaChange } = useComment();
 
     function handleIncreaseScore() {
         if (canIncrease) {
@@ -41,10 +42,6 @@ export function Comment({ data }) {
         setIsReplyClicked(!isReplyClicked);
 
         console.log('clicked');
-    }
-
-    function handleTextAreaChange(e) {
-        setCommentValue(e.target.value);
     }
 
     function handleCommentReply(e) {

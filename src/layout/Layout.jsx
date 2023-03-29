@@ -5,7 +5,8 @@ import { CommentReply } from '../components/Comment/CommentReply';
 import { CommentTextArea } from '../components/CommentTextArea/CommentTextArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { setComments, setCurrentUser } from '../redux/slice/commentSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useComment } from '../hooks/useComment';
 
 export function Layout() {
     const dispatch = useDispatch();
@@ -22,6 +23,8 @@ export function Layout() {
     }, []);
 
     const { commentsArr, commentsObj } = useSelector((state) => state.comment);
+
+    const { commentValue, handleTextAreaChange } = useComment();
 
     return (
         <section className={styles.layout_section}>
