@@ -1,0 +1,22 @@
+@import './abstract/variables';
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background-color: $background-color;
+}
+
+button {
+    background: none;
+    border: none;
+}
