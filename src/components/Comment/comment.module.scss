@@ -156,6 +156,30 @@ $padding: 2.4rem;
 }
 
 /**
+*   TEXT AREA EDIT CONTAINER
+**/
+.comment_text_area_edit {
+    display: flex;
+    flex-direction: column;
+
+    width: 70rem;
+
+    .comment_text_area_container {
+        padding: 0;
+
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+
+        .textarea {
+            width: inherit;
+        }
+    }
+}
+
+/**
 * COMMENT REPLY
 */
 
@@ -188,12 +212,19 @@ $padding: 2.4rem;
     .comment_reply_container {
         width: 100%;
         .comment_container,
-        .comment_text_area_container {
+        .comment_text_area_container,
+        .comment_text_area_edit {
             width: 62rem;
             margin-bottom: 2rem;
 
             &:last-of-type {
                 margin-bottom: 0;
+            }
+        }
+
+        .comment_text_area_edit {
+            .comment_text_area_container {
+                width: 100%;
             }
         }
 

@@ -3,14 +3,20 @@ import { Button } from '../Atoms/Button/Button';
 
 import styles from './comment.module.scss';
 
-export function CommentTextArea({ value, handleButtonClick, buttonText = 'send', handleChange }) {
+export function CommentTextArea({
+    value,
+    handleButtonClick,
+    buttonText = 'send',
+    handleChange,
+    isEdit = false,
+}) {
     const { currentUser } = useSelector((state) => state.comment);
 
     const userImg = currentUser?.image?.png;
 
     return (
         <div className={`${styles.comment_container} ${styles.comment_text_area_container}`}>
-            <img src={userImg} className={styles.user_image} />
+            {!isEdit ? <img src={userImg} className={styles.user_image} /> : ''}
             <textarea
                 className={styles.textarea}
                 placeholder='Add a comment...'

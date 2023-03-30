@@ -14,6 +14,7 @@ import {
     updateLocalStorageComments,
 } from '../../redux/slice/commentSlice';
 import { useComment } from '../../hooks/useComment';
+import { CommentTextAreaEdit } from './CommentTextAreaEdit';
 
 export function Comment({ data, isMyComment = false, isReply = false, parentId }) {
     const dispatch = useDispatch();
@@ -112,8 +113,10 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
     function handleEditClick() {
         setCommentValue(content);
 
-        setIsReplyClicked(true);
-        handleDeleteClick();
+        setIsEditClicked(true);
+
+        // handleDeleteClick();
+        // dispatch(updateLocalStorageComments());
     }
 
     return (
@@ -141,9 +144,28 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
                 <CommentTextArea
                     handleButtonClick={!isReply ? handleCommentReply : handleNestedCommentReply}
                     handleChange={handleTextAreaChange}
-                    buttonText={!isEditClicked ? 'reply' : 'update'}
+                    buttonText={'reply'}
                     value={commentValue}
                 />
+            ) : (
+                ''
+            )}
+            {isEditClicked ? (
+                <CommentTextAreaEdit
+                    handleButtonClick={handleCommentReply}
+                    value={commentValue}
+                    handleChange={handleTextAreaChange}
+                >
+                    <CommentHeader
+                        imgSrc={user.image.png}
+                        username={user.username}
+                        createdAt={createdAt}
+                        isMyComment={isMyComment}
+                        handleReplyClick={handleReplyClick}
+                        handleDeleteClick={handleDeleteClick}
+                        handleEditClick={handleEditClick}
+                    />
+                </CommentTextAreaEdit>
             ) : (
                 ''
             )}
