@@ -12,6 +12,7 @@ import {
 } from '../redux/slice/commentSlice';
 import { useEffect } from 'react';
 import { useComment } from '../hooks/useComment';
+import { Modal } from '../components/Modal/Modal';
 
 export function Layout() {
     const dispatch = useDispatch();
@@ -79,6 +80,8 @@ export function Layout() {
                 handleButtonClick={handleSend}
                 value={commentValue}
             />
+
+            <Modal />
         </section>
     );
 }

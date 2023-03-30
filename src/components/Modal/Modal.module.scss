@@ -1,0 +1,65 @@
+@import '../../styles/abstract/variables';
+@import '../../styles/abstract/mixins';
+
+.modal_section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    .modal_card {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        width: 40rem;
+        height: 25rem;
+
+        background: $white;
+        border-radius: $border-radius-alpha;
+
+        padding: 3.2rem;
+
+        @include breakpoint(mobile) {
+            width: 96vw;
+        }
+
+        h3 {
+            color: $dark-blue;
+            font-size: 2.4rem;
+            font-weight: 500;
+            line-height: 2.8rem;
+        }
+
+        p {
+            color: $grayish-blue;
+            line-height: 2.4rem;
+        }
+
+        .button_container {
+            display: flex;
+            gap: 2rem;
+
+            button {
+                width: 100%;
+
+                &:first-of-type {
+                    background-color: $grayish-blue;
+                }
+
+                &:last-of-type {
+                    background-color: $soft-red;
+                }
+            }
+        }
+    }
+}
