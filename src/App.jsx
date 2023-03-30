@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import { store } from './redux/store/store';
 import { Layout } from './layout/Layout';
-import COMMENTS_DATA from '../data.json';
+import { COMMENTS_DATA } from '../data';
 
 const { comments, currentUser } = COMMENTS_DATA;
 

@@ -1,8 +1,17 @@
-{
+import imgJuliusomoPng from "./src/assets/images/avatars/image-juliusomo.png"
+import imgJuliusomoWebp from "./src/assets/images/avatars/image-juliusomo.webp"
+import imgAmyrobsonPng from "./src/assets/images/avatars/image-amyrobson.png"
+import imgAmyrobsonWebp from "./src/assets/images/avatars/image-amyrobson.webp"
+import imgMaxblagunPng from "./src/assets/images/avatars/image-maxblagun.png"
+import imgMaxblagunWebp from "./src/assets/images/avatars/image-maxblagun.webp"
+import imgRamsesmironPng from "./src/assets/images/avatars/image-ramsesmiron.png"
+import imgRamsesmironWebp from "./src/assets/images/avatars/image-ramsesmiron.webp"
+
+export const COMMENTS_DATA = {
   "currentUser": {
     "image": {
-      "png": "./src/assets/images/avatars/image-juliusomo.png",
-      "webp": "./src/assets/images/avatars/image-juliusomo.webp"
+      "png": imgJuliusomoPng,
+      "webp": imgJuliusomoWebp
     },
     "username": "juliusomo"
   },
@@ -14,8 +23,8 @@
       "score": 12,
       "user": {
         "image": {
-          "png": "./src/assets/images/avatars/image-amyrobson.png",
-          "webp": "./src/assets/images/avatars/image-amyrobson.webp"
+          "png": imgAmyrobsonPng,
+          "webp": imgAmyrobsonWebp
         },
         "username": "amyrobson"
       },
@@ -28,8 +37,8 @@
       "score": 5,
       "user": {
         "image": {
-          "png": "./src/assets/images/avatars/image-maxblagun.png",
-          "webp": "./src/assets/images/avatars/image-maxblagun.webp"
+          "png": imgMaxblagunPng,
+          "webp": imgMaxblagunWebp
         },
         "username": "maxblagun"
       },
@@ -42,8 +51,8 @@
           "replyingTo": "maxblagun",
           "user": {
             "image": {
-              "png": "./src/assets/images/avatars/image-ramsesmiron.png",
-              "webp": "./src/assets/images/avatars/image-ramsesmiron.webp"
+              "png": imgRamsesmironPng,
+              "webp": imgRamsesmironWebp
             },
             "username": "ramsesmiron"
           }
