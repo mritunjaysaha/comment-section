@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     addReply,
     deleteComment,
+    deleteCommentReply,
     updateLocalStorageComments,
 } from '../../redux/slice/commentSlice';
 import { useComment } from '../../hooks/useComment';
 
-export function Comment({ data, isMyComment = false }) {
+export function Comment({ data, isMyComment = false, isReply = false, parentId }) {
     const dispatch = useDispatch();
 
     const { content, score, user, createdAt, id } = data;
@@ -56,7 +57,7 @@ export function Comment({ data, isMyComment = false }) {
             content: commentValue,
             createdAt: 'today',
             score: 0,
-            replyingtO: user.username,
+            replyingTo: user.username,
             user: {
                 image: currentUser.image,
                 username: currentUser.username,
@@ -76,6 +77,11 @@ export function Comment({ data, isMyComment = false }) {
         dispatch(updateLocalStorageComments());
     }
 
+    function handleCommentReplyDelete() {
+        dispatch(deleteCommentReply({ parentId, replyId: data.id }));
+        dispatch(updateLocalStorageComments());
+    }
+
     return (
         <>
             <div className={styles.comment_container}>
@@ -90,7 +96,13 @@ export function Comment({ data, isMyComment = false }) {
                         username={user.username}
                         createdAt={createdAt}
                         handleReplyClick={handleReplyClick}
-                        handleDeleteClick={handleCommentDelete}
+                        handleDeleteClick={() => {
+                            if (!isReply) {
+                                handleCommentDelete();
+                            } else {
+                                handleCommentReplyDelete();
+                            }
+                        }}
                         isMyComment={isMyComment}
                     />
                     <CommentBody content={content} />

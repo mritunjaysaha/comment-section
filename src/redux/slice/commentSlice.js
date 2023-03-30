@@ -67,7 +67,19 @@ export const commentSlice = createSlice({
 
             state.commentsArr = filteredArr
         }
+        ,
+        deleteCommentReply: (state, { payload }) => {
+            const { parentId, replyId } = payload
+
+            console.log({ parentId, replyId })
+
+            const filteredReplies = state.commentsObj[parentId].replies.filter((data) => data.id !== replyId)
+            state.commentsObj[parentId].replies = filteredReplies
+
+            console.log({ filteredReplies })
+
+        }
     }
 })
 
-export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments, deleteComment } = commentSlice.actions
+export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments, deleteComment, deleteCommentReply } = commentSlice.actions

@@ -67,6 +67,7 @@ export function Layout() {
                         <CommentReply
                             dataArray={commentsObj[id].replies}
                             currentUsername={currentUser.username}
+                            parentId={id}
                         />
                     ) : (
                         ''

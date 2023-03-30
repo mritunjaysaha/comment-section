@@ -10,8 +10,8 @@ export function CommentHeader({
     imgSrc,
     username,
     createdAt,
-    handleReplyClick,
     isMyComment,
+    handleReplyClick,
     handleDeleteClick,
 }) {
     const { currentUser } = useSelector((state) => state.comment);
