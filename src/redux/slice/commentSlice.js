@@ -105,8 +105,29 @@ export const commentSlice = createSlice({
                     return
                 }
             }
+        },
+        updateScore: (state, { payload }) => {
+            const { score, parentId, id } = payload
+
+            console.log({ score, parentId })
+
+            if (!parentId) {
+                state.commentsObj[id].score = score
+            } else {
+                const replies = state.commentsObj[parentId].replies
+
+                for (let i = 0, len = replies.length; i < len; i++) {
+                    const replyData = replies[i]
+
+                    if (replyData.id === id) {
+                        state.commentsObj[parentId].replies[i].score = score
+
+                        return
+                    }
+                }
+            }
         }
     }
 })
 
-export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments, deleteComment, deleteCommentReply, addNestedReply, editComment, editNestedComment } = commentSlice.actions
+export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments, deleteComment, deleteCommentReply, addNestedReply, editComment, editNestedComment, updateScore } = commentSlice.actions

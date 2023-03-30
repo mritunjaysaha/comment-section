@@ -14,6 +14,7 @@ import {
     editComment,
     editNestedComment,
     updateLocalStorageComments,
+    updateScore,
 } from '../../redux/slice/commentSlice';
 import { useComment } from '../../hooks/useComment';
 import { CommentTextAreaEdit } from './CommentTextAreaEdit';
@@ -37,14 +38,20 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId =
             setScoreCount((score) => (score += 1));
             setCanIncrease(!canIncrease);
             setCanDecrease(true);
+
+            dispatch(updateScore({ score: score + 1, parentId, id }));
+            dispatch(updateLocalStorageComments());
         }
     }
 
     function handleDecreaseScore() {
-        if (canDecrease) {
+        if (canDecrease && score > 0) {
             setScoreCount((score) => (score -= 1));
             setCanDecrease(!canDecrease);
             setCanIncrease(true);
+
+            dispatch(updateScore({ score: score - 1, parentId, id }));
+            dispatch(updateLocalStorageComments());
         }
     }
 
