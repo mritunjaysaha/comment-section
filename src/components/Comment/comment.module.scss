@@ -1,4 +1,5 @@
 @import '../../styles/abstract/variables';
+@import '../../styles/abstract/mixins';
 
 $padding: 2.4rem;
 
@@ -19,6 +20,20 @@ $padding: 2.4rem;
     .comment_data {
         width: 100%;
         padding-left: $padding;
+    }
+
+    @include breakpoint(mobile) {
+        position: relative;
+        flex-direction: column-reverse;
+
+        width: 96vw;
+
+        padding: 1.6rem;
+
+        .comment_data {
+            padding-left: 0;
+            margin-bottom: 1.6rem;
+        }
     }
 }
 
@@ -72,6 +87,13 @@ $padding: 2.4rem;
                 fill: $dark-blue;
             }
         }
+
+        @include breakpoint(mobile) {
+            position: absolute;
+
+            bottom: 3rem;
+            right: 3rem;
+        }
     }
 }
 
@@ -117,6 +139,14 @@ $padding: 2.4rem;
         color: $moderate-blue;
         font-weight: 500;
     }
+
+    @include breakpoint(mobile) {
+        flex-direction: row;
+        align-items: center;
+
+        width: 10rem;
+        height: 4rem;
+    }
 }
 
 /**
@@ -153,6 +183,33 @@ $padding: 2.4rem;
             border-color: $moderate-blue;
         }
     }
+
+    @include breakpoint(mobile) {
+        width: 96vw;
+        height: max-content;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr auto;
+        gap: 1.6rem;
+        grid-template-areas:
+            'textarea textarea'
+            'user-image button';
+
+        .user_image {
+            grid-area: user-image;
+        }
+
+        .textarea {
+            grid-area: textarea;
+        }
+
+        button {
+            grid-area: button;
+            position: absolute;
+            right: 0;
+        }
+    }
 }
 
 /**
@@ -177,6 +234,16 @@ $padding: 2.4rem;
             width: inherit;
         }
     }
+
+    @include breakpoint(mobile) {
+        width: 96vw;
+
+        .comment_text_area_container {
+            button {
+                position: relative;
+            }
+        }
+    }
 }
 
 /**
@@ -191,7 +258,9 @@ $padding: 2.4rem;
 
     margin-top: 2rem;
 
-    // margin: 0 2rem 0;
+    @include breakpoint(mobile) {
+        width: 96vw;
+    }
 
     .vertical_line {
         display: flex;
@@ -206,6 +275,11 @@ $padding: 2.4rem;
             height: 100%;
 
             background-color: $light-gray;
+        }
+
+        @include breakpoint(mobile) {
+            width: 6vw;
+            justify-content: left;
         }
     }
 
@@ -231,6 +305,21 @@ $padding: 2.4rem;
         &:last-of-type {
             .comment_container {
                 margin-top: 0;
+            }
+        }
+
+        @include breakpoint(mobile) {
+            width: 90vw;
+
+            .comment_container,
+            .comment_text_area_container,
+            .comment_text_area_edit {
+                width: 90vw;
+                margin-bottom: 2rem;
+
+                &:last-of-type {
+                    margin-bottom: 0;
+                }
             }
         }
     }
