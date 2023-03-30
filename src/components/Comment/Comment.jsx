@@ -9,10 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     addNestedReply,
     addReply,
-    deleteComment,
-    deleteCommentReply,
     editComment,
     editNestedComment,
+    openDeleteModel,
     updateLocalStorageComments,
     updateScore,
 } from '../../redux/slice/commentSlice';
@@ -101,21 +100,23 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId =
         dispatch(updateLocalStorageComments());
     }
 
-    function handleCommentDelete() {
-        dispatch(deleteComment(id));
-        dispatch(updateLocalStorageComments());
-    }
+    // function handleCommentDelete() {
+    //     dispatch(deleteComment(id));
+    //     dispatch(updateLocalStorageComments());
+    // }
 
-    function handleCommentReplyDelete() {
-        dispatch(deleteCommentReply({ parentId, replyId: data.id }));
-        dispatch(updateLocalStorageComments());
-    }
+    // function handleCommentReplyDelete() {
+    //     dispatch(deleteCommentReply({ parentId, replyId: data.id }));
+    //     dispatch(updateLocalStorageComments());
+    // }
 
     function handleDeleteClick() {
         if (!isReply) {
-            handleCommentDelete();
+            // handleCommentDelete();
+            dispatch(openDeleteModel({ id }));
         } else {
-            handleCommentReplyDelete();
+            // handleCommentReplyDelete();
+            dispatch(openDeleteModel({ parentId, id }));
         }
     }
 
@@ -123,28 +124,6 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId =
         setCommentValue(content);
 
         setIsEditClicked(true);
-    }
-
-    function handleSend(e) {
-        e.preventDefault();
-
-        const data = {
-            id: Date.now(),
-            content: commentValue,
-            createdAt: 'today',
-            score: 0,
-            user: {
-                image: currentUser.image,
-                username: currentUser.username,
-            },
-            replies: [],
-        };
-
-        dispatch(addNewComment(data));
-
-        dispatch(updateLocalStorageComments());
-
-        setCommentValue('');
     }
 
     function handleEditComment() {

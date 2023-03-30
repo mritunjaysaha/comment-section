@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useComment() {
     const [commentValue, setCommentValue] = useState('');

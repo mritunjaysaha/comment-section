@@ -1,133 +1,149 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     currentUser: {},
     commentsArr: [],
-    commentsObj: {}
-}
+    commentsObj: {},
+    deleteModal: { isDeleteClicked: false, id: '', parentId: '' },
+};
 
 export const commentSlice = createSlice({
-    name: "comment",
+    name: 'comment',
     initialState,
     reducers: {
         setCurrentUser: (state, { payload }) => {
-            state.currentUser = payload
-        }
-        ,
+            state.currentUser = payload;
+        },
         setComments: (state, { payload }) => {
             // state.comments = payload
-            const idArr = []
+            const idArr = [];
 
             payload.forEach((data) => {
-                idArr.push(data.id)
+                idArr.push(data.id);
 
-                state.commentsObj[data.id] = data
-            })
+                state.commentsObj[data.id] = data;
+            });
 
-            state.commentsArr = idArr
-        }
-        ,
+            state.commentsArr = idArr;
+        },
         addNewComment: (state, { payload }) => {
-            console.log(payload)
+            console.log(payload);
 
-            state.commentsArr.push(payload.id)
-            state.commentsObj[payload.id] = payload
-        }
-        ,
+            state.commentsArr.push(payload.id);
+            state.commentsObj[payload.id] = payload;
+        },
         addReply: (state, { payload }) => {
-            const { id, data } = payload
+            const { id, data } = payload;
 
+            console.log(id, data);
 
-            console.log(id, data)
+            state.commentsObj[id].replies.push(data);
 
-            state.commentsObj[id].replies.push(data)
-
-            updateLocalStorageComments(state)
+            updateLocalStorageComments(state);
         },
         addNestedReply: (state, { payload }) => {
-            const { parentId, data } = payload
+            const { parentId, data } = payload;
 
-            console.log({ parentId, data }, state.commentsObj[parentId])
-            state.commentsObj[parentId].replies.push(data)
-        }
-        ,
+            console.log({ parentId, data }, state.commentsObj[parentId]);
+            state.commentsObj[parentId].replies.push(data);
+        },
         updateLocalStorageComments: (state) => {
-            console.log("here")
-            const commentsArr = []
-
+            console.log('here');
+            const commentsArr = [];
 
             for (let i = 0, len = state.commentsArr.length; i < len; i++) {
-                const id = state.commentsArr[i]
-                const data = state.commentsObj[id]
-                commentsArr.push(data)
+                const id = state.commentsArr[i];
+                const data = state.commentsObj[id];
+                commentsArr.push(data);
             }
 
+            localStorage.setItem('comments', JSON.stringify(commentsArr));
+        },
 
-            localStorage.setItem("comments", JSON.stringify(commentsArr))
-        }
-        ,
-        deleteComment: (state, { payload }) => {
-            console.log({ payload })
-            const filteredArr = state.commentsArr.filter((id) => id !== payload)
 
-            console.log({ filteredArr })
+        deleteComment: (state) => {
+            const { parentId, id: childId } = state.deleteModal
 
-            state.commentsArr = filteredArr
-        }
-        ,
-        deleteCommentReply: (state, { payload }) => {
-            const { parentId, replyId } = payload
+            if (!parentId) {
+                const filteredArr = state.commentsArr.filter((id) => id !== childId);
 
-            console.log({ parentId, replyId })
+                console.log({ filteredArr });
 
-            const filteredReplies = state.commentsObj[parentId].replies.filter((data) => data.id !== replyId)
-            state.commentsObj[parentId].replies = filteredReplies
+                state.commentsArr = filteredArr;
+            } else {
+                const filteredReplies = state.commentsObj[parentId].replies.filter(
+                    (data) => data.id !== childId,
+                );
+                state.commentsObj[parentId].replies = filteredReplies;
 
-            console.log({ filteredReplies })
-
+                console.log({ filteredReplies });
+            }
         },
         editComment: (state, { payload }) => {
-            const { id, data } = payload
-            state.commentsObj[id] = { ...state.commentsObj[id], ...data }
+            const { id, data } = payload;
+            state.commentsObj[id] = { ...state.commentsObj[id], ...data };
         },
         editNestedComment: (state, { payload }) => {
-            const { parentId, childId, data } = payload
+            const { parentId, childId, data } = payload;
 
-
-            const replies = state.commentsObj[parentId].replies
+            const replies = state.commentsObj[parentId].replies;
 
             for (let i = 0, len = replies.length; i < len; i++) {
-                const replyData = replies[i]
+                const replyData = replies[i];
 
                 if (replyData.id === childId) {
-                    state.commentsObj[parentId].replies[i].content = data.content
+                    state.commentsObj[parentId].replies[i].content = data.content;
 
-                    return
+                    return;
                 }
             }
         },
         updateScore: (state, { payload }) => {
-            const { score, parentId, id } = payload
+            const { score, parentId, id } = payload;
 
-            console.log({ score, parentId })
+            console.log({ score, parentId });
 
             if (!parentId) {
-                state.commentsObj[id].score = score
+                state.commentsObj[id].score = score;
             } else {
-                const replies = state.commentsObj[parentId].replies
+                const replies = state.commentsObj[parentId].replies;
 
                 for (let i = 0, len = replies.length; i < len; i++) {
-                    const replyData = replies[i]
+                    const replyData = replies[i];
 
                     if (replyData.id === id) {
-                        state.commentsObj[parentId].replies[i].score = score
+                        state.commentsObj[parentId].replies[i].score = score;
 
-                        return
+                        return;
                     }
                 }
             }
-        }
-    }
-})
+        },
 
-export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments, deleteComment, deleteCommentReply, addNestedReply, editComment, editNestedComment, updateScore } = commentSlice.actions
+        openDeleteModel: (state, { payload }) => {
+            const { parentId, id } = payload
+
+            state.deleteModal.isDeleteClicked = true
+            state.deleteModal.parentId = parentId
+            state.deleteModal.id = id
+        },
+        closeDeleteModal: (state) => {
+            state.deleteModal.isDeleteClicked = false
+        }
+    },
+});
+
+export const {
+    setCurrentUser,
+    setComments,
+    addNewComment,
+    addReply,
+    updateLocalStorageComments,
+    deleteComment,
+    addNestedReply,
+    editComment,
+    editNestedComment,
+    updateScore,
+    openDeleteModel,
+    closeDeleteModal
+} = commentSlice.actions;

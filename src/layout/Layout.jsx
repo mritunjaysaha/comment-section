@@ -28,7 +28,11 @@ export function Layout() {
         }
     }, []);
 
-    const { commentsArr, commentsObj, currentUser } = useSelector((state) => state.comment);
+    const { commentsArr, commentsObj, currentUser, deleteModal } = useSelector(
+        (state) => state.comment,
+    );
+
+    const { isDeleteClicked } = deleteModal;
 
     const { commentValue, setCommentValue, handleTextAreaChange } = useComment();
 
@@ -81,7 +85,7 @@ export function Layout() {
                 value={commentValue}
             />
 
-            <Modal />
+            {isDeleteClicked ? <Modal /> : ''}
         </section>
     );
 }
