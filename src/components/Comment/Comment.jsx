@@ -11,12 +11,14 @@ import {
     addReply,
     deleteComment,
     deleteCommentReply,
+    editComment,
+    editNestedComment,
     updateLocalStorageComments,
 } from '../../redux/slice/commentSlice';
 import { useComment } from '../../hooks/useComment';
 import { CommentTextAreaEdit } from './CommentTextAreaEdit';
 
-export function Comment({ data, isMyComment = false, isReply = false, parentId }) {
+export function Comment({ data, isMyComment = false, isReply = false, parentId = '' }) {
     const dispatch = useDispatch();
 
     const { content, score, user, createdAt, id } = data;
@@ -114,14 +116,63 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
         setCommentValue(content);
 
         setIsEditClicked(true);
+    }
 
-        // handleDeleteClick();
-        // dispatch(updateLocalStorageComments());
+    function handleSend(e) {
+        e.preventDefault();
+
+        const data = {
+            id: Date.now(),
+            content: commentValue,
+            createdAt: 'today',
+            score: 0,
+            user: {
+                image: currentUser.image,
+                username: currentUser.username,
+            },
+            replies: [],
+        };
+
+        dispatch(addNewComment(data));
+
+        dispatch(updateLocalStorageComments());
+
+        setCommentValue('');
+    }
+
+    function handleEditComment() {
+        console.log(id);
+
+        const data = {
+            content: commentValue,
+        };
+
+        setIsEditClicked(false);
+        setCommentValue('');
+
+        dispatch(editComment({ id, data }));
+        dispatch(updateLocalStorageComments());
+    }
+
+    function handleEditNestedComment() {
+        const data = {
+            content: commentValue,
+        };
+
+        setIsEditClicked(false);
+        setCommentValue('');
+
+        dispatch(editNestedComment({ parentId, childId: id, data }));
+        dispatch(updateLocalStorageComments());
     }
 
     return (
         <>
-            <div className={styles.comment_container}>
+            <div
+                className={`${styles.comment_container} ${
+                    isEditClicked ? styles.hide_comment : ''
+                }`}
+            >
                 <CommentScoreCounter
                     score={scoreCount}
                     handleIncreaseScore={handleIncreaseScore}
@@ -152,7 +203,7 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
             )}
             {isEditClicked ? (
                 <CommentTextAreaEdit
-                    handleButtonClick={handleCommentReply}
+                    handleButtonClick={!parentId ? handleEditComment : handleEditNestedComment}
                     value={commentValue}
                     handleChange={handleTextAreaChange}
                 >
