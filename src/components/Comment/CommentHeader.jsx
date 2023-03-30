@@ -6,7 +6,14 @@ import { ButtonIcon } from '../Atoms/ButtonIcon/ButtonIcon';
 
 import styles from './comment.module.scss';
 
-export function CommentHeader({ imgSrc, username, createdAt, handleReplyClick, isMyComment }) {
+export function CommentHeader({
+    imgSrc,
+    username,
+    createdAt,
+    handleReplyClick,
+    isMyComment,
+    handleDeleteClick,
+}) {
     const { currentUser } = useSelector((state) => state.comment);
 
     return (
@@ -25,7 +32,7 @@ export function CommentHeader({ imgSrc, username, createdAt, handleReplyClick, i
             <div className={styles.button_container}>
                 {isMyComment ? (
                     <>
-                        <ButtonIcon type='DELETE' icon={IconDelete}>
+                        <ButtonIcon type='DELETE' icon={IconDelete} onClick={handleDeleteClick}>
                             Delete
                         </ButtonIcon>
                         <ButtonIcon icon={IconEdit}>Edit</ButtonIcon>

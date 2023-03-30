@@ -55,11 +55,19 @@ export const commentSlice = createSlice({
                 commentsArr.push(data)
             }
 
-            console.log({ commentsArr })
 
             localStorage.setItem("comments", JSON.stringify(commentsArr))
+        }
+        ,
+        deleteComment: (state, { payload }) => {
+            console.log({ payload })
+            const filteredArr = state.commentsArr.filter((id) => id !== payload)
+
+            console.log({ filteredArr })
+
+            state.commentsArr = filteredArr
         }
     }
 })
 
-export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments } = commentSlice.actions
+export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments, deleteComment } = commentSlice.actions

@@ -6,7 +6,11 @@ import styles from './comment.module.scss';
 import { useState } from 'react';
 import { CommentTextArea } from '../CommentTextArea/CommentTextArea';
 import { useDispatch, useSelector } from 'react-redux';
-import { addReply, updateLocalStorageComments } from '../../redux/slice/commentSlice';
+import {
+    addReply,
+    deleteComment,
+    updateLocalStorageComments,
+} from '../../redux/slice/commentSlice';
 import { useComment } from '../../hooks/useComment';
 
 export function Comment({ data, isMyComment = false }) {
@@ -67,6 +71,11 @@ export function Comment({ data, isMyComment = false }) {
         dispatch(updateLocalStorageComments());
     }
 
+    function handleCommentDelete(e) {
+        dispatch(deleteComment(id));
+        dispatch(updateLocalStorageComments());
+    }
+
     return (
         <>
             <div className={styles.comment_container}>
@@ -81,6 +90,7 @@ export function Comment({ data, isMyComment = false }) {
                         username={user.username}
                         createdAt={createdAt}
                         handleReplyClick={handleReplyClick}
+                        handleDeleteClick={handleCommentDelete}
                         isMyComment={isMyComment}
                     />
                     <CommentBody content={content} />
