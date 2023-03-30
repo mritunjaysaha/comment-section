@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 @import './abstract/variables';
+@import './abstract/mixins';
 
 *,
 *::after,
@@ -25,4 +26,10 @@ button {
     background: none;
     border: none;
     font-family: $font-family-alpha;
+}
+
+@include breakpoint(desktopXXL) {
+    html {
+        font-size: 100%;
+    }
 }
