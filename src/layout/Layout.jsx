@@ -2,7 +2,7 @@ import { Comment } from '../components/Comment/Comment';
 
 import styles from './layout.module.scss';
 import { CommentReply } from '../components/Comment/CommentReply';
-import { CommentTextArea } from '../components/CommentTextArea/CommentTextArea';
+import { CommentTextArea } from '../components/Comment/CommentTextArea';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     addNewComment,

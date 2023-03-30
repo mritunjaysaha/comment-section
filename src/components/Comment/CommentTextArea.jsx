@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Button } from '../Atoms/Button/Button';
 
-import styles from './commentTextArea.module.scss';
+import styles from './comment.module.scss';
 
 export function CommentTextArea({ value, handleButtonClick, buttonText = 'send', handleChange }) {
     const { currentUser } = useSelector((state) => state.comment);

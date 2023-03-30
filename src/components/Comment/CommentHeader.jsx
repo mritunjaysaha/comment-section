@@ -13,6 +13,7 @@ export function CommentHeader({
     isMyComment,
     handleReplyClick,
     handleDeleteClick,
+    handleEditClick,
 }) {
     const { currentUser } = useSelector((state) => state.comment);
 
@@ -35,7 +36,9 @@ export function CommentHeader({
                         <ButtonIcon type='DELETE' icon={IconDelete} onClick={handleDeleteClick}>
                             Delete
                         </ButtonIcon>
-                        <ButtonIcon icon={IconEdit}>Edit</ButtonIcon>
+                        <ButtonIcon icon={IconEdit} onClick={handleEditClick}>
+                            Edit
+                        </ButtonIcon>
                     </>
                 ) : (
                     <ButtonIcon icon={IconReply} onClick={handleReplyClick}>

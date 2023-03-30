@@ -44,7 +44,14 @@ export const commentSlice = createSlice({
 
             updateLocalStorageComments(state)
         },
-        updateLocalStorageComments: (state, { payload }) => {
+        addNestedReply: (state, { payload }) => {
+            const { parentId, data } = payload
+
+            console.log({ parentId, data }, state.commentsObj[parentId])
+            state.commentsObj[parentId].replies.push(data)
+        }
+        ,
+        updateLocalStorageComments: (state) => {
             console.log("here")
             const commentsArr = []
 
@@ -82,4 +89,4 @@ export const commentSlice = createSlice({
     }
 })
 
-export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments, deleteComment, deleteCommentReply } = commentSlice.actions
+export const { setCurrentUser, setComments, addNewComment, addReply, updateLocalStorageComments, deleteComment, deleteCommentReply, addNestedReply } = commentSlice.actions

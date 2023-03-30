@@ -4,9 +4,10 @@ import { CommentScoreCounter } from './CommentScoreCounter';
 
 import styles from './comment.module.scss';
 import { useState } from 'react';
-import { CommentTextArea } from '../CommentTextArea/CommentTextArea';
+import { CommentTextArea } from './CommentTextArea';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    addNestedReply,
     addReply,
     deleteComment,
     deleteCommentReply,
@@ -24,6 +25,7 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
     const [canIncrease, setCanIncrease] = useState(true);
     const [canDecrease, setCanDecrease] = useState(true);
     const [isReplyClicked, setIsReplyClicked] = useState(false);
+    const [isEditClicked, setIsEditClicked] = useState(false);
 
     const { commentValue, setCommentValue, handleTextAreaChange } = useComment();
 
@@ -58,10 +60,7 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
             createdAt: 'today',
             score: 0,
             replyingTo: user.username,
-            user: {
-                image: currentUser.image,
-                username: currentUser.username,
-            },
+            user: currentUser,
         };
 
         dispatch(addReply({ id, data }));
@@ -72,7 +71,27 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
         dispatch(updateLocalStorageComments());
     }
 
-    function handleCommentDelete(e) {
+    function handleNestedCommentReply() {
+        const nestedReplyData = {
+            id: Date.now(),
+            content: commentValue,
+            createdAt: 'today',
+            score: 0,
+            replyingTo: user.username,
+            user: currentUser,
+        };
+
+        console.log({ nestedReplyData });
+
+        setIsReplyClicked(false);
+        setCommentValue('');
+
+        dispatch(addNestedReply({ parentId, data: nestedReplyData }));
+
+        dispatch(updateLocalStorageComments());
+    }
+
+    function handleCommentDelete() {
         dispatch(deleteComment(id));
         dispatch(updateLocalStorageComments());
     }
@@ -80,6 +99,21 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
     function handleCommentReplyDelete() {
         dispatch(deleteCommentReply({ parentId, replyId: data.id }));
         dispatch(updateLocalStorageComments());
+    }
+
+    function handleDeleteClick() {
+        if (!isReply) {
+            handleCommentDelete();
+        } else {
+            handleCommentReplyDelete();
+        }
+    }
+
+    function handleEditClick() {
+        setCommentValue(content);
+
+        setIsReplyClicked(true);
+        handleDeleteClick();
     }
 
     return (
@@ -95,24 +129,19 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId }
                         imgSrc={user.image.png}
                         username={user.username}
                         createdAt={createdAt}
-                        handleReplyClick={handleReplyClick}
-                        handleDeleteClick={() => {
-                            if (!isReply) {
-                                handleCommentDelete();
-                            } else {
-                                handleCommentReplyDelete();
-                            }
-                        }}
                         isMyComment={isMyComment}
+                        handleReplyClick={handleReplyClick}
+                        handleDeleteClick={handleDeleteClick}
+                        handleEditClick={handleEditClick}
                     />
                     <CommentBody content={content} />
                 </div>
             </div>
             {isReplyClicked ? (
                 <CommentTextArea
-                    handleButtonClick={handleCommentReply}
+                    handleButtonClick={!isReply ? handleCommentReply : handleNestedCommentReply}
                     handleChange={handleTextAreaChange}
-                    buttonText='reply'
+                    buttonText={!isEditClicked ? 'reply' : 'update'}
                     value={commentValue}
                 />
             ) : (
