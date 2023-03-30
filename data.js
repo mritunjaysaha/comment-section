@@ -65,8 +65,8 @@ export const COMMENTS_DATA = {
           "replyingTo": "ramsesmiron",
           "user": {
             "image": {
-              "png": "./src/assets/images/avatars/image-juliusomo.png",
-              "webp": "./src/assets/images/avatars/image-juliusomo.webp"
+              "png": imgJuliusomoPng,
+              "webp": imgJuliusomoWebp
             },
             "username": "juliusomo"
           }
