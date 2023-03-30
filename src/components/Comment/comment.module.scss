@@ -16,6 +16,7 @@ $padding: 2.4rem;
     width: 70rem;
 
     margin-top: 2rem;
+    animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
     .comment_data {
         width: 100%;
@@ -327,4 +328,15 @@ $padding: 2.4rem;
 
 .hide_comment {
     display: none;
+}
+
+@keyframes slide-in-left {
+    0% {
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
