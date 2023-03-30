@@ -57,10 +57,17 @@ export function Layout() {
         <section className={styles.layout_section}>
             {commentsArr.map((id) => (
                 <>
-                    <Comment key={id} data={commentsObj[id]} />
+                    <Comment
+                        key={id}
+                        data={commentsObj[id]}
+                        isMyComment={currentUser.username === commentsObj[id].user.username}
+                    />
 
                     {commentsObj[id]?.replies.length ? (
-                        <CommentReply dataArray={commentsObj[id].replies} />
+                        <CommentReply
+                            dataArray={commentsObj[id].replies}
+                            currentUsername={currentUser.username}
+                        />
                     ) : (
                         ''
                     )}

@@ -2,7 +2,7 @@ import { Comment } from './Comment';
 
 import styles from './comment.module.scss';
 
-export function CommentReply({ dataArray }) {
+export function CommentReply({ dataArray, currentUsername }) {
     return (
         <section className={styles.comment_reply_section}>
             <div className={styles.vertical_line}>
@@ -10,9 +10,13 @@ export function CommentReply({ dataArray }) {
             </div>
             <div className={styles.comment_reply_container}>
                 {dataArray.map((data) => (
-                    <Comment key={data.id} data={data} isReply={true} />
+                    <Comment
+                        key={data.id}
+                        data={data}
+                        isMyComment={data.user.username === currentUsername}
+                    />
                 ))}
-            </div>{' '}
+            </div>
         </section>
     );
 }

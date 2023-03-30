@@ -62,6 +62,17 @@ $padding: 2.4rem;
             font-weight: 400;
         }
     }
+
+    .button_container {
+        display: flex;
+        gap: 1.6rem;
+
+        svg {
+            path {
+                fill: $dark-blue;
+            }
+        }
+    }
 }
 
 /**
