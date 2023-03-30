@@ -63,6 +63,10 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId =
     function handleCommentReply(e) {
         e.preventDefault();
 
+        if (!commentValue) {
+            return;
+        }
+
         const data = {
             id: Date.now(),
             content: commentValue,
@@ -81,6 +85,10 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId =
     }
 
     function handleNestedCommentReply() {
+        if (!commentValue) {
+            return;
+        }
+
         const nestedReplyData = {
             id: Date.now(),
             content: commentValue,
@@ -100,22 +108,10 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId =
         dispatch(updateLocalStorageComments());
     }
 
-    // function handleCommentDelete() {
-    //     dispatch(deleteComment(id));
-    //     dispatch(updateLocalStorageComments());
-    // }
-
-    // function handleCommentReplyDelete() {
-    //     dispatch(deleteCommentReply({ parentId, replyId: data.id }));
-    //     dispatch(updateLocalStorageComments());
-    // }
-
     function handleDeleteClick() {
         if (!isReply) {
-            // handleCommentDelete();
             dispatch(openDeleteModel({ id }));
         } else {
-            // handleCommentReplyDelete();
             dispatch(openDeleteModel({ parentId, id }));
         }
     }
@@ -127,7 +123,9 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId =
     }
 
     function handleEditComment() {
-        console.log(id);
+        if (!commentValue) {
+            return;
+        }
 
         const data = {
             content: commentValue,
@@ -141,6 +139,10 @@ export function Comment({ data, isMyComment = false, isReply = false, parentId =
     }
 
     function handleEditNestedComment() {
+        if (!commentValue) {
+            return;
+        }
+
         const data = {
             content: commentValue,
         };
