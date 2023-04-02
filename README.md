@@ -1,3 +1,12 @@
+## Steps to run the project
+
+```bash
+npm install
+npm run dev
+```
+
+The project will open in http://localhost:5173
+
 **To do this challenge, you need a strong understanding of HTML, CSS and JavaScript.**
 
 ## The challenge
